@@ -6,7 +6,7 @@ const IssueListItem = ({ title, user, date, number, comments }) => {
       <div className="titleAndMeta">
         <div>{title}</div>
         <div className="meta">
-          <div>{number}</div>
+          <div>#{number}</div>
           <div>opened on {date}</div>
           <div>by {user}</div>
         </div>

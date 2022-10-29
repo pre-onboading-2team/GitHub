@@ -1,18 +1,20 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import useIssueContext from "../../hooks/useIssueContext";
 import IssueListItem from "./IssueListItem";
 
 const IssueList = () => {
   const { issueData, setIssueData } = useIssueContext();
+  const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get(
-        "https://api.github.com/repos/angular/angular-cli/issues?sort=comments&per_page=15&page=1"
+        `https://api.github.com/repos/angular/angular-cli/issues?sort=comments&per_page=10&page=${pageNumber}`
       );
+
       const newDataArr = res.data.map((obj) => ({
-        date: obj.created_at,
+        date: obj.created_at.split("T")[0],
         title: obj.title,
         user: obj.user.login,
         number: obj.number,
@@ -21,24 +23,24 @@ const IssueList = () => {
       }));
 
       setIssueData((prev) => [...prev, ...newDataArr]);
-      // setIssueData(newDataArr);
     };
     getData();
+  }, [pageNumber]);
 
-    return () => {
-      setIssueData([]);
-    };
-  }, []);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+  });
 
-  // useEffect(() => {
-  //   first
+  const handleScroll = () => {
+    console.log("scrollY: ", window.scrollY);
+    console.log("innerHeight: ", window.innerHeight);
+    console.log("offsetHeight: ", document.body.offsetHeight);
 
-  //   return () => {
-  //     second
-  //   }
-  // }, [third])
+    if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+      setPageNumber((num) => num + 1);
+    }
+  };
 
-  console.log(issueData);
   return (
     <ul>
       {issueData.map((issue) => (

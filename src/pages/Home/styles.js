@@ -14,6 +14,9 @@ export const ListItem = styled.li`
   }
   .meta {
     display: flex;
+    > * {
+      margin-right: 5px;
+    }
   }
   .comments {
     align-self: center;
