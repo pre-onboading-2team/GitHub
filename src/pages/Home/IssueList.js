@@ -1,16 +1,25 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import Spinner from "../../components/Spinner";
 import useIssueContext from "../../hooks/useIssueContext";
 import IssueListItem from "./IssueListItem";
+import * as S from "./styles";
 
 const IssueList = () => {
   const { issueData, setIssueData } = useIssueContext();
   const [pageNumber, setPageNumber] = useState(1);
+
+  const [isInitialLoading, setisInitialLoading] = useState(true);
+  const [isAdditionalLoading, setIsAdditionalLoading] = useState(false);
+
   useEffect(() => {
     const getData = async () => {
+      if (pageNumber !== 1) {
+        setIsAdditionalLoading(true);
+      }
       const res = await axios.get(
-        `https://api.github.com/repos/angular/angular-cli/issues?sort=comments&per_page=10&page=${pageNumber}`
+        `https://api.github.com/repos/angular/angular-cli/issues?sort=comments&per_page=8&page=${pageNumber}`
       );
 
       const newDataArr = res.data.map((obj) => ({
@@ -21,8 +30,9 @@ const IssueList = () => {
         comments: obj.comments,
         id: obj.id,
       }));
-
       setIssueData((prev) => [...prev, ...newDataArr]);
+      setisInitialLoading(false);
+      setIsAdditionalLoading(false);
     };
     getData();
   }, [pageNumber]);
@@ -32,28 +42,31 @@ const IssueList = () => {
   });
 
   const handleScroll = () => {
-    console.log("scrollY: ", window.scrollY);
-    console.log("innerHeight: ", window.innerHeight);
-    console.log("offsetHeight: ", document.body.offsetHeight);
-
     if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
       setPageNumber((num) => num + 1);
     }
   };
 
   return (
-    <ul>
-      {issueData.map((issue) => (
-        <IssueListItem
-          key={issue.id}
-          title={issue.title}
-          user={issue.user}
-          date={issue.date}
-          number={issue.number}
-          comments={issue.comments}
-        />
-      ))}
-    </ul>
+    <S.List>
+      {isInitialLoading ? (
+        <Spinner className="spinner-main" />
+      ) : (
+        <>
+          {issueData.map((issue) => (
+            <IssueListItem
+              key={issue.id}
+              title={issue.title}
+              user={issue.user}
+              date={issue.date}
+              number={issue.number}
+              comments={issue.comments}
+            />
+          ))}
+        </>
+      )}
+      {isAdditionalLoading ? <Spinner className="spinner-sub" /> : null}
+    </S.List>
   );
 };
 

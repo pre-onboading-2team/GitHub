@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Header = styled.header`
-  /* display: flex; */
+  align-self: flex-start;
   .meta {
     display: flex;
     > :first-child {
@@ -9,7 +9,21 @@ export const Header = styled.header`
     }
   }
 `;
+export const List = styled.ul`
+  width: 100%;
+`;
 
+export const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .spinner {
+    font-size: 40px;
+    position: absolute;
+    top: 50%;
+  }
+`;
 export const CommentListItem = styled.li`
   background-color: white;
   border-radius: 10px;
@@ -33,7 +47,7 @@ export const CommentListItem = styled.li`
     }
   }
   .comment-body {
-    /* margin: 10px; */
     padding: 20px;
+    overflow-x: scroll;
   }
 `;

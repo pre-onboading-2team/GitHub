@@ -3,12 +3,9 @@ import IssueList from "./IssueList";
 
 const Home = () => {
   return (
-    <div>
-      Home
-      <IssueCtxProvider>
-        <IssueList />
-      </IssueCtxProvider>
-    </div>
+    <IssueCtxProvider>
+      <IssueList />
+    </IssueCtxProvider>
   );
 };
 

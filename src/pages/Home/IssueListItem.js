@@ -15,7 +15,7 @@ const IssueListItem = ({ title, user, date, number, comments }) => {
           <div>by {user}</div>
         </div>
       </div>
-      <div className="comments">{comments}</div>
+      <S.Balloon className="comments">{comments}</S.Balloon>
     </S.ListItem>
   );
 };
