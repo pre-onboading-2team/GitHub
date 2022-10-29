@@ -2,18 +2,12 @@
 /* eslint-disable camelcase */
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
 import { getIssues } from "../../apis";
-import { Advertisement, IssueCard } from "../../components";
+import { Advertisement, IssueCard, LoadingSpinner } from "../../components";
 import { useIssueDispatch, useIssueSelector } from "../../contexts";
 import { useInfiniteScroll } from "../../hooks";
-
-export const UList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
+import * as S from "./IssueList.style";
 
 const IssueList = () => {
   const [page, setPage] = useState(1);
@@ -34,7 +28,7 @@ const IssueList = () => {
   }, [dispatch, page, isError, navigate]);
 
   return (
-    <UList>
+    <S.UList>
       {issueList.map((issue, index) => {
         const { id, number, title, comments, created_at, user } = issue;
         return (
@@ -50,8 +44,14 @@ const IssueList = () => {
           </React.Fragment>
         );
       })}
-      {isLoading ? <div>Loading...</div> : <div ref={setTarget} />}
-    </UList>
+      {isLoading ? (
+        <S.LoadingContainer>
+          <LoadingSpinner />
+        </S.LoadingContainer>
+      ) : (
+        <div ref={setTarget} />
+      )}
+    </S.UList>
   );
 };
 
