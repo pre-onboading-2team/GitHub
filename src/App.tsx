@@ -1,5 +1,16 @@
+import { Route, Routes } from "react-router-dom";
+
+import { IssueDetail, IssueList } from "./pages";
+
 const App = () => {
-  return <div className="App">hi</div>;
+  return (
+    <Routes>
+      {/* <Route path="/" element={null}> */}
+      <Route path="/" element={<IssueList />} />
+      <Route path="/:id" element={<IssueDetail />} />
+      {/* </Route> */}
+    </Routes>
+  );
 };
 
 export default App;
