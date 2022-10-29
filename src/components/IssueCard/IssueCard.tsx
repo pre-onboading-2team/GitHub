@@ -1,9 +1,10 @@
+import { dateFormat } from "../../utils";
 import * as S from "./IssueCard.style";
 
 interface Props {
   issueNumber: number;
   title: string;
-  createdAt: Date;
+  createdAt: string;
   comments: number;
   writerName: string;
 }
@@ -23,7 +24,7 @@ const IssueCard = ({
         </S.MainInfos>
         <S.SubInfos>
           <span>작성자: {writerName}</span>
-          <span>작성일: {String(createdAt)}</span>
+          <span>작성일: {dateFormat(createdAt)}</span>
         </S.SubInfos>
       </S.LeftSide>
       <S.Comment>
