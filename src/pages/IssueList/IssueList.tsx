@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { getIssueList } from "../../apis";
-import { IssueCard } from "../../components";
+import { Advertisement, IssueCard } from "../../components";
 import { Issue } from "../../types";
 
 export const UList = styled.ul`
@@ -21,17 +21,19 @@ const IssueList = () => {
 
   return (
     <UList>
-      {issueList.map((issue) => {
+      {issueList.map((issue, index) => {
         const { id, number, title, comments, created_at, user } = issue;
         return (
-          <IssueCard
-            key={id}
-            issueNumber={number}
-            title={title}
-            createdAt={created_at}
-            comments={comments}
-            writerName={user.login}
-          />
+          <React.Fragment key={id}>
+            {index === 4 && <Advertisement />}
+            <IssueCard
+              issueNumber={number}
+              title={title}
+              createdAt={created_at}
+              comments={comments}
+              writerName={user.login}
+            />
+          </React.Fragment>
         );
       })}
     </UList>
