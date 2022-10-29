@@ -7,11 +7,15 @@ export const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
-  border: 1px solid red;
+
+  & > h1 {
+    font-size: 1.4rem;
+    margin: 30px 0;
+  }
 
   & > section {
+    max-width: 1160px;
     width: 100%;
-    max-width: 1300px;
   }
 `;
 
