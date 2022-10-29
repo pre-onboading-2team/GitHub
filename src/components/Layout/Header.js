@@ -1,7 +1,7 @@
 import * as S from "./styles";
 
 const Header = () => {
-  return <S.Header>Angular issue</S.Header>;
+  return <S.Header>Angular-cli issue</S.Header>;
 };
 
 export default Header;

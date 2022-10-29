@@ -4,16 +4,9 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import CommentListItem from "./CommentListItem";
+import * as S from "./styles";
 
 const Detail = () => {
-  //이슈번호, param
-  //이슈제목 , data.title
-
-  //작성자, data.user.login
-  //작성일, data.created_at
-  //코멘트 수 data.comments
-  //작성자 프로필 이미지, res.data.user.avatar_url,
-  //본문 res.data.body,
   const { number } = useParams();
   const [mainData, setMainData] = useState({});
   const [commentsData, setCommentsData] = useState([]);
@@ -24,7 +17,6 @@ const Detail = () => {
         `https://api.github.com/repos/angular/angular-cli/issues/${number}`
       );
       setMainData(res.data);
-      console.log(res.data);
     };
     getData();
   }, []);
@@ -41,11 +33,18 @@ const Detail = () => {
 
   return (
     <>
-      <h1>{mainData?.title}</h1>
-      <div>#{number}</div>
-      <div>{mainData?.comments}</div>
-      {/*  */}
-      <div>{commentsData[0]?.body}</div>
+      <S.Header>
+        <h1>
+          {mainData?.title} #{number}
+        </h1>
+        <div className="meta">
+          <div>
+            {mainData?.created_at?.split("T")[0]} opened by{" "}
+            {mainData?.user?.login}.
+          </div>
+          <div>{mainData?.comments} comments</div>
+        </div>
+      </S.Header>
 
       <ul>
         <CommentListItem
