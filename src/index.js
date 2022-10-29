@@ -7,13 +7,13 @@ import GlobalStyles from "./components/GlobalStyles";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-console.log(process.env.REACT_APP_API_KEY);
+// console.log(process.env.REACT_APP_API_KEY);
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <Router>
     <GlobalStyles />
-    <Router>
-      <App />
-    </Router>
-  </React.StrictMode>
+    <App />
+  </Router>
+  // </React.StrictMode>
 );
