@@ -1,5 +1,5 @@
 const IssueList = () => {
-  return <div>IssueList</div>;
+  return <main>IssueList</main>;
 };
 
 export default IssueList;
