@@ -4,11 +4,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import App from "./App";
 import GlobalStyles from "./components/GlobalStyles";
-// import GlobalStyles from "./components/GlobalStyles";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
-// console.log(process.env.REACT_APP_API_KEY);
 
 root.render(
   // <React.StrictMode>
@@ -18,3 +15,4 @@ root.render(
   </Router>
   // </React.StrictMode>
 );
+// https://shiny-parfait-47e153.netlify.app/

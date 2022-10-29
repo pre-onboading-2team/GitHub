@@ -57,7 +57,7 @@ const IssueList = () => {
     return <ErrorPage />;
   }
   return (
-    <S.List>
+    <S.List className="list">
       {isInitialLoading ? (
         <Spinner className="spinner-main" />
       ) : (

@@ -4,7 +4,7 @@ import * as S from "./styles";
 
 const IssueListItem = ({ title, user, date, number, comments }) => {
   return (
-    <S.ListItem>
+    <S.ListItem className="item">
       <div className="titleAndMeta">
         <div>
           <Link to={`/${number}`}>{title}</Link>
