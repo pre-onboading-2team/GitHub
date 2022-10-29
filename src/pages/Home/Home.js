@@ -1,10 +1,13 @@
+import { IssueCtxProvider } from "../../context/IssueContext";
 import IssueList from "./IssueList";
 
 const Home = () => {
   return (
     <div>
       Home
-      <IssueList />
+      <IssueCtxProvider>
+        <IssueList />
+      </IssueCtxProvider>
     </div>
   );
 };
