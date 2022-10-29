@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { dateFormat } from "../../utils";
 import * as S from "./IssueCard.style";
 
@@ -7,6 +9,7 @@ interface Props {
   createdAt: string;
   comments: number;
   writerName: string;
+  isDetailPage: boolean;
 }
 
 const IssueCard = ({
@@ -15,9 +18,14 @@ const IssueCard = ({
   createdAt,
   comments,
   writerName,
+  isDetailPage,
 }: Props) => {
+  const navigate = useNavigate();
   return (
-    <S.Card>
+    <S.Card
+      onClick={() => navigate(`/${issueNumber}`)}
+      isDetailPage={isDetailPage}
+    >
       <S.LeftSide>
         <S.MainInfos>
           <h3>{`# ${issueNumber} ${title}`}</h3>

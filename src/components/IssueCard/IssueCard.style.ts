@@ -1,17 +1,19 @@
 import styled from "styled-components";
 
-export const Card = styled.li`
+export const Card = styled.li<{ isDetailPage: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 6rem;
+  width: 100%;
   padding: 0 10px;
   border-bottom: 1px solid black;
   transition: all 0.4s;
-  cursor: pointer;
+  cursor: ${({ isDetailPage }) => (isDetailPage ? "default" : "pointer")};
 
   &:hover {
-    background-color: #d7d7d7;
+    background-color: ${({ isDetailPage }) =>
+      isDetailPage ? "inherit" : "#d7d7d7"};
   }
 `;
 

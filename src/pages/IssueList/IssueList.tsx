@@ -40,6 +40,7 @@ const IssueList = () => {
               createdAt={created_at}
               comments={comments}
               writerName={user.login}
+              isDetailPage={false}
             />
           </React.Fragment>
         );
