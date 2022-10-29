@@ -4,7 +4,7 @@ export interface Issue {
   user: User;
   title: string;
   body: string;
-  created_at: Date;
+  created_at: string;
   comments: number;
 }
 
