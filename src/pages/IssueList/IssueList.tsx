@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable camelcase */
 import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { getIssues } from "../../apis";
@@ -16,7 +17,7 @@ export const UList = styled.ul`
 
 const IssueList = () => {
   const [page, setPage] = useState(1);
-
+  const navigate = useNavigate();
   const dispatch = useIssueDispatch();
   const { issueList, isError, isLoading } = useIssueSelector();
 
@@ -28,7 +29,9 @@ const IssueList = () => {
 
   useEffect(() => {
     getIssues(dispatch, page);
-  }, [dispatch, page]);
+
+    if (isError) navigate("*");
+  }, [dispatch, page, isError, navigate]);
 
   return (
     <UList>

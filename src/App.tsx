@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import { SharedLayout } from "./components";
-import { IssueDetail, IssueList } from "./pages";
+import { IssueDetail, IssueList, NotFound } from "./pages";
 
 const App = () => {
   return (
@@ -9,6 +9,7 @@ const App = () => {
       <Route path="/" element={<SharedLayout />}>
         <Route path="/" element={<IssueList />} />
         <Route path="/:id" element={<IssueDetail />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
