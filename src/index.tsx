@@ -4,15 +4,16 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
 import { GlobalStyle } from "./assets";
+import { IssueProvider } from "./contexts";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <GlobalStyle />
+  <BrowserRouter>
+    <GlobalStyle />
+    <IssueProvider>
       <App />
-    </BrowserRouter>
-  </React.StrictMode>
+    </IssueProvider>
+  </BrowserRouter>
 );

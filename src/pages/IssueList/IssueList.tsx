@@ -1,10 +1,12 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable camelcase */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { getIssueList } from "../../apis";
+import { getIssues } from "../../apis";
 import { Advertisement, IssueCard } from "../../components";
-import { Issue } from "../../types";
+import { useIssueDispatch, useIssueSelector } from "../../contexts";
+import { useInfiniteScroll } from "../../hooks";
 
 export const UList = styled.ul`
   display: flex;
@@ -13,11 +15,20 @@ export const UList = styled.ul`
 `;
 
 const IssueList = () => {
-  const [issueList, setIssueList] = useState<Issue[]>([]);
+  const [page, setPage] = useState(1);
+
+  const dispatch = useIssueDispatch();
+  const { issueList, isError, isLoading } = useIssueSelector();
+
+  const handlePage = useCallback(() => {
+    setPage((prev) => prev + 1);
+  }, []);
+
+  const [setTarget] = useInfiniteScroll(handlePage, { threshold: 0 });
 
   useEffect(() => {
-    getIssueList().then((data) => setIssueList(data));
-  }, []);
+    getIssues(dispatch, page);
+  }, [dispatch, page]);
 
   return (
     <UList>
@@ -36,6 +47,7 @@ const IssueList = () => {
           </React.Fragment>
         );
       })}
+      {isLoading ? <div>Loading...</div> : <div ref={setTarget} />}
     </UList>
   );
 };
