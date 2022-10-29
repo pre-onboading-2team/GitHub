@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 
 import Spinner from "../../components/Spinner";
 import CommentListItem from "./CommentListItem";
+import ErrorPage from "./ErrorPage";
 import * as S from "./styles";
 
 const Detail = () => {
@@ -12,6 +13,7 @@ const Detail = () => {
   const [mainData, setMainData] = useState({});
   const [commentsData, setCommentsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const mainRespones = axios.get(
       `https://api.github.com/repos/angular/angular-cli/issues/${number}`
@@ -24,9 +26,15 @@ const Detail = () => {
         setMainData(main.data);
         setCommentsData(comment.data);
         setIsLoading(false);
+      })
+      .catch(() => {
+        setIsError(true);
       });
   }, []);
 
+  if (isError) {
+    return <ErrorPage />;
+  }
   return (
     <S.PageContainer>
       {isLoading ? (

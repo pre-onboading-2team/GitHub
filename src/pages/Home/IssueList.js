@@ -3,21 +3,22 @@ import { useEffect, useState } from "react";
 
 import Spinner from "../../components/Spinner";
 import useIssueContext from "../../hooks/useIssueContext";
+import ErrorPage from "./ErrorPage";
 import IssueListItem from "./IssueListItem";
 import * as S from "./styles";
 
 const IssueList = () => {
   const { issueData, setIssueData } = useIssueContext();
   const [pageNumber, setPageNumber] = useState(1);
-
+  const [isError, setIsError] = useState(false);
   const [isInitialLoading, setisInitialLoading] = useState(true);
   const [isAdditionalLoading, setIsAdditionalLoading] = useState(false);
 
-  useEffect(() => {
-    const getData = async () => {
-      if (pageNumber !== 1) {
-        setIsAdditionalLoading(true);
-      }
+  const getData = async () => {
+    if (pageNumber !== 1) {
+      setIsAdditionalLoading(true);
+    }
+    try {
       const res = await axios.get(
         `https://api.github.com/repos/angular/angular-cli/issues?sort=comments&per_page=8&page=${pageNumber}`
       );
@@ -33,7 +34,12 @@ const IssueList = () => {
       setIssueData((prev) => [...prev, ...newDataArr]);
       setisInitialLoading(false);
       setIsAdditionalLoading(false);
-    };
+    } catch (err) {
+      setIsError(true);
+    }
+  };
+
+  useEffect(() => {
     getData();
   }, [pageNumber]);
 
@@ -47,6 +53,9 @@ const IssueList = () => {
     }
   };
 
+  if (isError) {
+    return <ErrorPage />;
+  }
   return (
     <S.List>
       {isInitialLoading ? (
