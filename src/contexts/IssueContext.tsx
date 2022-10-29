@@ -6,38 +6,64 @@ export interface IssueCtxInitialState {
   isLoading: boolean;
   isError: boolean;
   issueList: Issue[];
+  issueDetail: null | Issue;
 }
 
 export enum IssueActionTypes {
-  GET_ISSUES_SUCCESS = "GET_ISSUES_SUCCESS",
-  GET_ISSUES_LOADING = "GET_ISSUES_LOADING",
-  GET_ISSUES_ERROR = "GET_ISSUES_ERROR",
+  GET_ISSUE_LIST_SUCCESS = "GET_ISSUES_LIST_SUCCESS",
+  GET_ISSUE_LIST_LOADING = "GET_ISSUES_LIST_LOADING",
+  GET_ISSUE_LIST_ERROR = "GET_ISSUES_LIST_ERROR",
+
+  GET_ISSUE_DETAIL_SUCCESS = "GET_ISSUES_DETAIL_SUCCESS",
+  GET_ISSUE_DETAIL_LOADING = "GET_ISSUES_DETAIL_LOADING",
+  GET_ISSUE_DETAIL_ERROR = "GET_ISSUES_DETAIL_ERROR",
 }
 
 const initialState: IssueCtxInitialState = {
   isLoading: false,
   isError: false,
   issueList: [],
+  issueDetail: null,
 };
 
 const issueReducer = (
   state: IssueCtxInitialState,
-  action: { type: IssueActionTypes; data?: Issue[] }
+  action: { type: IssueActionTypes; data?: Issue[] | Issue }
 ) => {
   switch (action.type) {
-    case IssueActionTypes.GET_ISSUES_LOADING:
+    case IssueActionTypes.GET_ISSUE_LIST_LOADING:
       return {
         ...state,
         isLoading: true,
         isError: false,
       };
-    case IssueActionTypes.GET_ISSUES_SUCCESS:
+    case IssueActionTypes.GET_ISSUE_LIST_SUCCESS:
       return {
+        ...state,
         issueList: [...state.issueList, ...(action.data as Issue[])],
         isLoading: false,
         isError: false,
       };
-    case IssueActionTypes.GET_ISSUES_ERROR:
+    case IssueActionTypes.GET_ISSUE_LIST_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    case IssueActionTypes.GET_ISSUE_DETAIL_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case IssueActionTypes.GET_ISSUE_DETAIL_SUCCESS:
+      return {
+        ...state,
+        issueDetail: action.data as Issue,
+        isLoading: false,
+        isError: false,
+      };
+    case IssueActionTypes.GET_ISSUE_DETAIL_ERROR:
       return {
         ...state,
         isLoading: false,
@@ -51,7 +77,7 @@ const issueReducer = (
 const IssueStateContext = createContext<IssueCtxInitialState>(initialState);
 const IssueDispatchContext = createContext<React.Dispatch<{
   type: IssueActionTypes;
-  data?: Issue[];
+  data?: Issue[] | Issue;
 }> | null>(null);
 
 export const IssueProvider = ({ children }: { children: JSX.Element }) => {
