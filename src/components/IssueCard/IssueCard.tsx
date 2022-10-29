@@ -1,20 +1,33 @@
 import * as S from "./IssueCard.style";
 
-const IssueCard = () => {
+interface Props {
+  issueNumber: number;
+  title: string;
+  createdAt: Date;
+  comments: number;
+  writerName: string;
+}
+
+const IssueCard = ({
+  issueNumber,
+  title,
+  createdAt,
+  comments,
+  writerName,
+}: Props) => {
   return (
     <S.Card>
       <S.LeftSide>
         <S.MainInfos>
-          <span>#111</span>
-          <h3>Issue title</h3>
+          <h3>{`# ${issueNumber} ${title}`}</h3>
         </S.MainInfos>
         <S.SubInfos>
-          <span>작성자: 모상빈</span>
-          <span>작성일: 2019년 12월 31일</span>
+          <span>작성자: {writerName}</span>
+          <span>작성일: {String(createdAt)}</span>
         </S.SubInfos>
       </S.LeftSide>
       <S.Comment>
-        <span>코멘트: 67</span>
+        <span>코멘트: {comments}</span>
       </S.Comment>
     </S.Card>
   );
