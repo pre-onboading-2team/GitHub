@@ -6,7 +6,7 @@ import { IssuesContextProvider, IssuesState } from "../contexts/IssueContext";
 import { useAsync } from "../utils/useAsync";
 
 export const Issues = () => {
-  const [state, getIssues] = useAsync(IssueService.get, []);
+  const [state, getIssues] = useAsync(IssueService.getIssues, null, []);
   const { loading, data, error } = state;
 
   const init = async () => {

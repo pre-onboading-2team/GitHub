@@ -1,33 +1,27 @@
+/* eslint-disable camelcase */
+import { useEffect } from "react";
+
+import { IssueProps } from "../../types";
 import { MarkdownRenderer } from "../Markdown/MarkdownRenderer";
 import { IssueItem } from "./IssueItem";
 import * as S from "./style";
 
-// 더미 데이터
-const markdown = `
-# 헤딩
+export const IssueDetail = ({ data }: { data: IssueProps }) => {
+  const { number, title, user, created_at, comments, body } = data;
 
-**굵게**
-
-일반 텍스트
-
-\`\`\`
-    import what
-\`\`\`
-
-*기울이기*
-
-> 인용문
-
-`;
-
-export const IssueDetail = () => {
   return (
     <S.IssueDetailContainer>
       <S.IssueDetailTitle>
-        <div className="Profile">프로필 이미지</div>
-        {/* <IssueItem /> */}
+        <S.IssueItemProfile />
+        <IssueItem
+          number={number}
+          title={title}
+          user={user}
+          createdAt={created_at}
+          comments={comments}
+        />
       </S.IssueDetailTitle>
-      <MarkdownRenderer>{markdown}</MarkdownRenderer>
+      <MarkdownRenderer>{body}</MarkdownRenderer>
     </S.IssueDetailContainer>
   );
 };

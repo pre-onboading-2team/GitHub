@@ -6,7 +6,7 @@ export const LayoutContainer = styled.div`
 `;
 
 export const LayoutMainBlock = styled.div`
-  width: 70%;
+  width: 90%;
   margin: 0 auto;
   /* padding: 0 auto; */
   margin-bottom: auto;

@@ -3,18 +3,18 @@
 import { client } from "./api";
 
 interface IssueService {
-  get(): Promise<any>;
-  //   getIssue(): Promise<AxiosResponse>;
+  getIssues(): Promise<any>;
+  getIssue(number: number): Promise<any>;
 }
 
 class IssueServiceImp implements IssueService {
-  get() {
-    return client.get("issues", { params: { sort: "comments" } });
+  getIssues() {
+    return client.get("", { params: { sort: "comments" } });
   }
 
-  //   getIssue(): void {
-  //     return client.get("issues");
-  //   }
+  getIssue(number: number) {
+    return client.get(`${number}`);
+  }
 }
 
 export default new IssueServiceImp();

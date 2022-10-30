@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const BASE_URL = "https://api.github.com/repos/angular/angular-cli/";
+export const BASE_URL =
+  "https://api.github.com/repos/angular/angular-cli/issues";
 const JSON_TYPE = "application/json";
 
-// TODO : 환경 변수로 변경하기
-const ACCESS_TOKEN = "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";
+const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
 
 export const client = axios.create({
   baseURL: BASE_URL,

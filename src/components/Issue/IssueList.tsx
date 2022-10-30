@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 import {
   IssuesState,
@@ -16,6 +17,7 @@ type IssueListProps = {
 export const IssueList = ({ fetchedIssues }: IssueListProps) => {
   const issues = useIssuesState();
   const dispatch = useIssuesDispatch();
+  const navigate = useNavigate();
 
   const setIssues = async () => {
     await dispatch({ type: "SET", state: fetchedIssues });
@@ -35,6 +37,9 @@ export const IssueList = ({ fetchedIssues }: IssueListProps) => {
           user={user}
           createdAt={created_at}
           comments={comments}
+          onClick={() => {
+            navigate(`/${number}`);
+          }}
         />
       ))}
     </S.IssueListContainer>

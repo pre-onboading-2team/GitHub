@@ -49,14 +49,19 @@ const initialState: RequestState = {
 };
 
 export function useAsync(
-  callback: () => Promise<any>,
+  callback: (params?: any) => Promise<any>,
+  params?: any,
   deps: DependencyList = []
 ): [RequestState, () => Promise<void>] {
   const [state, dispatch] = useReducer(asyncReducer, initialState);
   const fetchData = async () => {
     dispatch({ type: "LOADING" });
     try {
-      const data = await callback();
+      let data;
+      if (!params) data = await callback();
+      else {
+        data = await callback(params);
+      }
       dispatch({ type: "SUCCESS", data });
     } catch (e: any) {
       dispatch({ type: "ERROR", error: e });
