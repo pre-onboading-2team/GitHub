@@ -12,12 +12,7 @@ export const getIssues = async (
   dispatch({ type: IssueActionTypes.GET_ISSUE_LIST_LOADING });
   try {
     const { data } = await axiosInstance.get(
-      `/issues?sort=comments&page=${page}&per_page=10`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_TOKEN}`,
-        },
-      }
+      `/issues?sort=comments&page=${page}&per_page=10`
     );
 
     dispatch({ type: IssueActionTypes.GET_ISSUE_LIST_SUCCESS, data });
@@ -35,11 +30,7 @@ export const getIssueDetail = async (
 ): Promise<void> => {
   dispatch({ type: IssueActionTypes.GET_ISSUE_DETAIL_LOADING });
   try {
-    const { data } = await axiosInstance.get(`/issues/${issueNumber}`, {
-      headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_TOKEN}`,
-      },
-    });
+    const { data } = await axiosInstance.get(`/issues/${issueNumber}`);
 
     dispatch({ type: IssueActionTypes.GET_ISSUE_DETAIL_SUCCESS, data });
   } catch {

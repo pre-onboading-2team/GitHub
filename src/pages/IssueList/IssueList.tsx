@@ -23,9 +23,8 @@ const IssueList = () => {
 
   useEffect(() => {
     getIssues(dispatch, page);
-
     if (isError) navigate("/not-found");
-  }, [dispatch, page, isError, navigate]);
+  }, [isError, navigate, dispatch, page]);
 
   return (
     <S.UList>
