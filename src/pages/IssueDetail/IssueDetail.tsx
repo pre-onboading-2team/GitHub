@@ -40,7 +40,7 @@ const IssueDetail = () => {
             issueNumber={issueDetail.number}
             title={issueDetail.title}
             createdAt={issueDetail.created_at}
-            comments={issueDetail.comments as number}
+            comments={issueDetail.comments}
             writerName={issueDetail.user.login}
             isDetailPage
           />
