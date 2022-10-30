@@ -1,30 +1,42 @@
 /* eslint-disable camelcase */
-import { useIssuesDispatch, useIssuesState } from "../../contexts/IssueContext";
-import { useAsync } from "../../utils/useAsync";
-import { IssueItem } from "./IssueItem";
+import { useEffect } from "react";
 
-export const IssueList = () => {
-  // TODO: loading 상태와 error 상태 구분해서 렌더링 표기
+import {
+  IssuesState,
+  useIssuesDispatch,
+  useIssuesState,
+} from "../../contexts/IssueContext";
+import { IssueItem } from "./IssueItem";
+import * as S from "./style";
+
+type IssueListProps = {
+  fetchedIssues: IssuesState;
+};
+
+export const IssueList = ({ fetchedIssues }: IssueListProps) => {
   const issues = useIssuesState();
   const dispatch = useIssuesDispatch();
-  // const [state,getIssues] = useAsync(IssueService.getIssues(),deps);
 
-  if (!issues) return <div>Loading</div>;
+  const setIssues = async () => {
+    await dispatch({ type: "SET", state: fetchedIssues });
+  };
+
+  useEffect(() => {
+    setIssues();
+  }, []);
 
   return (
-    <div className="IssueListPage">
-      <div className="IssueList">
-        {issues.map(({ id, number, title, user, created_at, comments }) => (
-          <IssueItem
-            key={id}
-            number={number}
-            title={title}
-            user={user}
-            createdAt={created_at}
-            comments={comments}
-          />
-        ))}
-      </div>
-    </div>
+    <S.IssueListContainer>
+      {issues.map(({ id, number, title, user, created_at, comments }) => (
+        <IssueItem
+          key={id}
+          number={number}
+          title={title}
+          user={user}
+          createdAt={created_at}
+          comments={comments}
+        />
+      ))}
+    </S.IssueListContainer>
   );
 };
