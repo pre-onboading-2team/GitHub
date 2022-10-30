@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+## 1주차 2번째 과제(Issue_List) 구현사항
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+</br>
 
-## Available Scripts
+# 이슈목록화면
 
-In the project directory, you can run:
+</br>
 
-### `npm start`
+- ### 이슈목록 불러오기
+```javascript
+//IssueList.js
+const IssueList = () => {
+  const [issues, setIssues] = useState();
+  const navigate = useNavigate();
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  const getIssue = async (page = 1) => {
+    await axios
+      .get(
+        `https://api.github.com/repos/angular/angular-cli/issues?sort=comments&per_page=20&page=${page}`
+      )
+      .then((result) => {
+        if (result.status !== 200) navigate('/*');
+        return setIssues(result.data);
+      });
+  };
+  useEffect(() => {
+    getIssue();
+  }, []);
+  ```
+  
+  Issue목록을 불러오는 Get요청입니다. 코멘트 수를 기준으로 정렬을 했고, 한 페이지에 20개씩 뜨도록 했습니다.
+  잘못된 경로일 경우 에러페이지로 이동하도록 했습니다. useEffect를 통해 렌더링 될때 마다 뜰 수 있도록 했습니다.
+  </br>
+  
+  - ### 이슈목록에 필요한 요소만 이슈 아이템으로 보내기
+```javascript
+//IssueList.js
+{issues &&
+        issues.map((issue, i) => (
+          <IssueItem
+            id={issue.id}
+            title={issue.title}
+            writer={issue.user.login}
+            date={issue.created_at}
+            comments={issue.comments}
+            AdBanner={i === 3}
+          />
+        ))}
+  ```
+  
+  데이터를 담은 issues를 map으로 묶어서 필요한 요소만 뽑아서 IssueItem에 담아줬습니다.
+  광고 배너를 5번째칸에 띄우기 위해서 index 3이면 들어가도록 해주었습니다.
+  </br>
