@@ -1,4 +1,4 @@
-
+배포 링크: https://2nd-assignment.vercel.app/
 ### Context API를 활용한 API 연동
 `Context API` `useReducer` 를 활용하여 `Flux 패턴`으로 서버 데이터 관리.
 - 단방향 데이터 흐름으로 복잡성을 줄임
