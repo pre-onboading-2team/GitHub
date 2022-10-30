@@ -1,10 +1,3 @@
-## 필수 구현 기능
-- 이슈 목록 및 상세 화면 기능 구현
-- Context API를 활용한 API 연동
-- 데이터 요청 중 로딩 표시
-- 에러 화면 구현
-- 지정된 조건(open 상태, 코멘트 많은 순)에 맞게 데이터 요청 및 표시
-- 반응형 웹 구현(UI는 데스크톱, 모바일에서 보았을 때 모두 읽기 편하게 구현)
 
 ### Context API를 활용한 API 연동
 `Context API` `useReducer` 를 활용하여 `Flux 패턴`으로 서버 데이터 관리.
@@ -154,7 +147,7 @@ export const useInfiniteScroll = (
 - 페이지별 레이아웃이 복잡하지 않아 레이아웃을 디바이스 별로 변경하지는 않았음
 - `media query`와 `rem`을 활용하여 디바이스 별로 대체적인 크기의 밸런스를 맞춤
 
-```javascript
+```css
   @media screen and (max-width: 600px) {
     html {
       font-size: 12px;
