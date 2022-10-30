@@ -1,22 +1,19 @@
 /* eslint-disable camelcase */
-import { IssueState } from "../../pages/Issues";
+import { useIssuesDispatch, useIssuesState } from "../../contexts/IssueContext";
+import { useAsync } from "../../utils/useAsync";
 import { IssueItem } from "./IssueItem";
 
-type IssueListProps = {
-  issues: IssueState[];
-};
+export const IssueList = () => {
+  // TODO: loading 상태와 error 상태 구분해서 렌더링 표기
+  const issues = useIssuesState();
+  const dispatch = useIssuesDispatch();
+  // const [state,getIssues] = useAsync(IssueService.getIssues(),deps);
 
-export const IssueList = ({ issues }: IssueListProps) => {
-  // TODO: loading 상태와 error 상태 구분해서 렌더링
   if (!issues) return <div>Loading</div>;
 
   return (
     <div className="IssueListPage">
       <div className="IssueList">
-        {/* 렌더링 테스트 */}
-        {/* <IssueItem />
-        <IssueItem />
-        <IssueItem /> */}
         {issues.map(({ id, number, title, user, created_at, comments }) => (
           <IssueItem
             key={id}
