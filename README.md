@@ -1,46 +1,100 @@
-# Getting Started with Create React App
+## 필수 구현 기능
+- 이슈 목록 및 상세 화면 기능 구현
+- Context API를 활용한 API 연동
+- 데이터 요청 중 로딩 표시
+- 에러 화면 구현
+- 지정된 조건(open 상태, 코멘트 많은 순)에 맞게 데이터 요청 및 표시
+- 반응형 웹 구현(UI는 데스크톱, 모바일에서 보았을 때 모두 읽기 편하게 구현)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Context API를 활용한 API 연동
+`Context API` `useReducer` 를 활용하여 `Flux 패턴`으로 서버 데이터 관리.
+- 단방향 데이터 흐름으로 복잡성을 줄임
 
-## Available Scripts
+```javascript
+export enum IssueActionTypes {
+  GET_ISSUE_LIST_SUCCESS = "GET_ISSUES_LIST_SUCCESS",
+  GET_ISSUE_LIST_LOADING = "GET_ISSUES_LIST_LOADING",
+  GET_ISSUE_LIST_ERROR = "GET_ISSUES_LIST_ERROR",
 
-In the project directory, you can run:
+  GET_ISSUE_DETAIL_SUCCESS = "GET_ISSUES_DETAIL_SUCCESS",
+  GET_ISSUE_DETAIL_LOADING = "GET_ISSUES_DETAIL_LOADING",
+  GET_ISSUE_DETAIL_ERROR = "GET_ISSUES_DETAIL_ERROR",
+}
 
-### `npm start`
+const initialState: IssueCtxInitialState = {
+  isLoading: false,
+  isError: false,
+  issueList: [],
+  issueDetail: null,
+};
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+const issueReducer = (
+  state: IssueCtxInitialState,
+  action: { type: IssueActionTypes; data?: Issue[] | Issue }
+) => {
+  switch (action.type) {
+    case IssueActionTypes.GET_ISSUE_LIST_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case IssueActionTypes.GET_ISSUE_LIST_SUCCESS:
+      return {
+        ...state,
+        issueList: [...state.issueList, ...(action.data as Issue[])],
+        isLoading: false,
+        isError: false,
+      };
+    case IssueActionTypes.GET_ISSUE_LIST_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    case IssueActionTypes.GET_ISSUE_DETAIL_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case IssueActionTypes.GET_ISSUE_DETAIL_SUCCESS:
+      return {
+        ...state,
+        issueDetail: action.data as Issue,
+        isLoading: false,
+        isError: false,
+      };
+    case IssueActionTypes.GET_ISSUE_DETAIL_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    default:
+      throw new Error("action type을 확인해주세요.");
+  }
+};
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+const IssueStateContext = createContext<IssueCtxInitialState>(initialState);
+const IssueDispatchContext = createContext<React.Dispatch<{
+  type: IssueActionTypes;
+  data?: Issue[] | Issue;
+}> | null>(null);
 
-### `npm test`
+export const IssueProvider = ({ children }: { children: JSX.Element }) => {
+  const [state, dispatch] = useReducer(issueReducer, initialState);
+  return (
+    <IssueStateContext.Provider value={state}>
+      <IssueDispatchContext.Provider value={dispatch}>
+        {children}
+      </IssueDispatchContext.Provider>
+    </IssueStateContext.Provider>
+  );
+};
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 무한 스크롤
+- `Intersection Opserver API` 활용
+- 재사용성을 
+- `Intersection Opserver API` 활용위해
