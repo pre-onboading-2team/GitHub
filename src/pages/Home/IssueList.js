@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import Spinner from "../../components/Spinner";
 import useIssueContext from "../../hooks/useIssueContext";
+import AdArea from "./AdArea";
 import ErrorPage from "./ErrorPage";
 import IssueListItem from "./IssueListItem";
 import * as S from "./styles";
@@ -62,15 +63,26 @@ const IssueList = () => {
         <Spinner className="spinner-main" />
       ) : (
         <>
-          {issueData.map((issue) => (
-            <IssueListItem
-              key={issue.id}
-              title={issue.title}
-              user={issue.user}
-              date={issue.date}
-              number={issue.number}
-              comments={issue.comments}
-            />
+          {issueData.map((issue, idx) => (
+            <>
+              {idx === 4 && (
+                <a
+                  href="https://www.wanted.co.kr/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <AdArea />
+                </a>
+              )}
+              <IssueListItem
+                key={issue.id}
+                title={issue.title}
+                user={issue.user}
+                date={issue.date}
+                number={issue.number}
+                comments={issue.comments}
+              />
+            </>
           ))}
         </>
       )}

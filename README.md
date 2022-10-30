@@ -4,7 +4,21 @@
 
 https://shiny-parfait-47e153.netlify.app/
 
-## 이슈 list
+## 이슈 list - context API 이용
+
+```jsx
+// context/issueContext.js
+
+const IssueCtxProvider = ({ children }) => {
+  const [issueData, setIssueData] = useState([]);
+
+  return (
+    <IssueContext.Provider value={{ issueData, setIssueData }}>
+      {children}
+    </IssueContext.Provider>
+  );
+};
+```
 
 ```jsx
 // pages/Home/lissueList.js
@@ -118,3 +132,29 @@ useEffect(() => {
 
 - 최초 로딩 혹은 무한스크롤에 의한 로딩에 의해 각각
   화면 중간 화면 하단에 스피너를 출력합니다.
+
+## 광고 페이지
+
+```jsx
+{
+  issueData.map((issue, idx) => (
+    <>
+      {idx === 4 && (
+        <a href="https://www.wanted.co.kr/" target="_blank" rel="noreferrer">
+          <AdArea />
+        </a>
+      )}
+      <IssueListItem
+        key={issue.id}
+        title={issue.title}
+        user={issue.user}
+        date={issue.date}
+        number={issue.number}
+        comments={issue.comments}
+      />
+    </>
+  ));
+}
+```
+
+도빈님과 같은 방식으로 구현했습니다.

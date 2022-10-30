@@ -63,4 +63,13 @@ export const ListItem = styled.li`
     }
     background-color: #00000013;  */
   }
+
+  &.ad {
+    /* cursor: pointer; */
+    /* background-color: black; */
+    align-items: center;
+    justify-content: center;
+    img {
+    }
+  }
 `;
