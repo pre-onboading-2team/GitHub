@@ -25,7 +25,7 @@ export const IssueDetail = () => {
     <S.IssueDetailContainer>
       <S.IssueDetailTitle>
         <div className="Profile">프로필 이미지</div>
-        <IssueItem />
+        {/* <IssueItem /> */}
       </S.IssueDetailTitle>
       <MarkdownRenderer>{markdown}</MarkdownRenderer>
     </S.IssueDetailContainer>

@@ -1,15 +1,17 @@
-import React, { ReactNode } from "react";
+import React from "react";
 
 import * as S from "./style";
 
 type HeaderProps = {
-  children: ReactNode;
+  title: string;
+  subtitle: string;
 };
 
-export const Header = ({ children }: HeaderProps) => {
+export const Header = ({ title, subtitle }: HeaderProps) => {
   return (
     <S.HeaderBlock>
-      <S.HeaderTitle>{children}</S.HeaderTitle>
+      <S.HeaderTitle>{title}</S.HeaderTitle>
+      <S.HeaderTitle>{subtitle}</S.HeaderTitle>
     </S.HeaderBlock>
   );
 };

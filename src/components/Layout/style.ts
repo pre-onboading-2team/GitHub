@@ -6,7 +6,14 @@ export const LayoutContainer = styled.div`
 `;
 
 export const LayoutMainBlock = styled.div`
-  padding: 0.5rem;
-  /* background: aqua; */
+  width: 70%;
+  margin: 0 auto;
+  /* padding: 0 auto; */
   margin-bottom: auto;
+
+  @media screen and (max-width: 390px) {
+    width: 100%;
+    margin: 0;
+    padding: 0 1rem;
+  }
 `;

@@ -1,15 +1,29 @@
+import { UserProps } from "../../types";
 import * as S from "./style";
 
-export const IssueItem = () => {
+type IssueItemProps = {
+  number: number;
+  title: string;
+  user: UserProps;
+  createdAt: string;
+  comments: number;
+};
+
+export const IssueItem = ({
+  number,
+  title,
+  user,
+  createdAt,
+  comments,
+}: IssueItemProps) => {
   return (
     <S.IssueItemContainer>
-      <div className="body">
-        <div className="titleBlock">
-          <span className="title">#111 issue title</span>
-        </div>
-        <div className="metadata">작성자: name, 작성일: 2019년 12월 31일</div>
-      </div>
-      <div className="comments">코멘트: 67</div>
+      <S.IssueItemBody>
+        <S.IssueItemTitle>{`#${number} ${title}`}</S.IssueItemTitle>
+        <S.IssueItemInfo>{`작성자: ${user.login}`}</S.IssueItemInfo>
+        <S.IssueItemInfo>{`작성일: ${createdAt}`}</S.IssueItemInfo>
+      </S.IssueItemBody>
+      <S.IssueItemComments>{`코멘트: ${comments}`}</S.IssueItemComments>
     </S.IssueItemContainer>
   );
 };

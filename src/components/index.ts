@@ -7,3 +7,4 @@ export * from "./Issue/IssueList";
 export * from "./Layout/Layout";
 export * from "./Loading/Loading";
 export * from "./Markdown/MarkdownRenderer";
+export * from "./Title/Title";

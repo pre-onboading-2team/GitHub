@@ -7,7 +7,7 @@ import * as S from "./style";
 export const Layout = () => {
   return (
     <S.LayoutContainer>
-      <Header>Organization Name / Repo Name</Header>
+      <Header title="Organization Name" subtitle="Repo Name" />
       <S.LayoutMainBlock>
         <Outlet />
       </S.LayoutMainBlock>
