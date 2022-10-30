@@ -96,5 +96,92 @@ export const IssueProvider = ({ children }: { children: JSX.Element }) => {
 
 ### 무한 스크롤
 - `Intersection Opserver API` 활용
-- 재사용성을 
-- `Intersection Opserver API` 활용위해
+- 재사용성을 위해 커스텀훅으로 분리
+
+```javascript
+export const useInfiniteScroll = (
+  onIntersect: () => void,
+  options?: IntersectionObserverInit
+) => {
+  const [target, setTarget] = useState<Element | null>(null);
+
+  const handleIntersect = useCallback(
+    ([entry]: IntersectionObserverEntry[]) => {
+      if (entry.isIntersecting) {
+        onIntersect();
+      }
+    },
+    [onIntersect]
+  );
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersect, options);
+    target && observer.observe(target);
+    return () => {
+      observer.disconnect();
+    };
+  }, [handleIntersect, target, options]);
+
+  return [setTarget];
+};
+```
+
+### 다섯번째 셀에 광고 삽입
+- `map`의 `index`를 활용
+
+```javascript
+<S.UList>
+      {issueList.map((issue, index) => {
+        const { id, number, title, comments, created_at, user } = issue;
+        return (
+          <React.Fragment key={id}>
+            {index === 4 && <Advertisement />}
+            <IssueCard
+              issueNumber={number}
+              title={title}
+              createdAt={created_at}
+              comments={comments}
+              writerName={user.login}
+              isDetailPage={false}
+            />
+          </React.Fragment>
+        );
+      })}
+</S.UList>
+```
+
+### 반응형 웹
+- 페이지별 레이아웃이 복잡하지 않아 레이아웃을 디바이스 별로 변경하지는 않았음
+- `media query`와 `rem`을 활용하여 디바이스 별로 대체적인 크기의 밸런스를 맞춤
+
+```javascript
+  @media screen and (max-width: 600px) {
+    html {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (min-width: 600px) {
+    html {
+      font-size: 13px;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    html {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    html {
+      font-size: 15px;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    html {
+      font-size: 16px;
+    }
+  }
+```
