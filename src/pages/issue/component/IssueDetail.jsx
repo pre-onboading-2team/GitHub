@@ -16,14 +16,14 @@ export default function IssueDetail() {
     });
 
     useEffect(() => {
-        async function getDetail() {
+        async function getIssueDetail() {
             const response = await IssueService.getListIssueDetail(number);
             if (response.status === 200) {
                 console.log(response.data);
                 setIssueDetail(response.data);
             }
         }
-        getDetail();
+        getIssueDetail();
     }, []);
     console.info('issueDetail', issueDetail.title);
 
