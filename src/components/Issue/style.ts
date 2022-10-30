@@ -2,33 +2,48 @@ import styled from "styled-components";
 
 export const IssueListContainer = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
+
+  padding: 1rem 0;
 `;
 
-export const IssueItemContainer = styled.div`
+export const ItemContainer = styled.div`
   display: flex;
-  box-sizing: border-box;
-  flex: 2;
-
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  width: 80%;
+  width: 100%;
 
   border: 1px solid gray;
-  border-radius: 0.25rem;
+  /* border-radius: 0.25rem; */
 
   padding: 0.8rem;
+  /* margin-bottom: 0.25rem; */
 
   cursor: pointer;
 
   & + & {
-    margin-bottom: 0.5rem;
+    /* margin-bottom: 0.25rem; */
   }
+`;
+
+export const BannerItemContainer = styled(ItemContainer)`
+  height: 100px;
+  justify-content: center;
+`;
+
+export const BannerItemLink = styled.a`
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 `;
 
 export const IssueItemBody = styled.div`
   display: flex;
-  width: 100%;
+  /* width: 100%; */
+  margin-right: auto;
   flex-direction: column;
   overflow: hidden;
 `;
@@ -39,26 +54,39 @@ export const IssueItemTitle = styled.div`
   white-space: nowrap;
 
   font-size: 0.9rem;
-`;
-
-// TODO : image url 연결
-export const IssueItemProfile = styled.div`
-  flex: none;
-  height: 40px;
-  width: 40px;
-  background: gray;
-  margin-right: 0.5rem;
+  margin-bottom: 1rem;
 `;
 
 export const IssueItemInfo = styled.div`
+  display: flex;
+`;
+
+// TODO : image url 연결
+export const IssueItemProfileImg = styled.img`
+  flex: none;
+  height: 32px;
+  width: 32px;
+  /* background: gray; */
+  margin-right: 0.5rem;
+`;
+
+export const IssueItemDescBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const IssueItemDesc = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
   font-size: 0.75rem;
 `;
 
 export const IssueItemComments = styled.div`
   flex: none;
-  width: 80px;
   font-size: 0.375rem;
-  margin-left: 0.5rem;
+  /* margin-left: auto; */
   text-align: center;
 `;
 
@@ -70,6 +98,4 @@ export const IssueDetailContainer = styled.div`
 export const IssueDetailTitle = styled.div`
   display: flex;
   align-items: center;
-  /* background: magenta; */
-  /* padding: 0 rem; */
 `;

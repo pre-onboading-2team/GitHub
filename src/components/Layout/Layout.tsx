@@ -7,7 +7,7 @@ import * as S from "./style";
 export const Layout = () => {
   return (
     <S.LayoutContainer>
-      <Header title="Organization Name" subtitle="Repo Name" />
+      <Header title="angular" subtitle="angular-cli" />
       <S.LayoutMainBlock>
         <Outlet />
       </S.LayoutMainBlock>

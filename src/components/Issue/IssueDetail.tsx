@@ -12,7 +12,6 @@ export const IssueDetail = ({ data }: { data: IssueProps }) => {
   return (
     <S.IssueDetailContainer>
       <S.IssueDetailTitle>
-        <S.IssueItemProfile />
         <IssueItem
           number={number}
           title={title}

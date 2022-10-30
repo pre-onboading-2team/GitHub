@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 
-import IssueService from "../../apis/IssueService";
 import { UserProps } from "../../types";
-import { useAsync } from "../../utils/useAsync";
+import { getFormattedDate } from "../../utils";
 import * as S from "./style";
 
 type IssueItemProps = {
@@ -23,13 +22,20 @@ export const IssueItem = ({
   onClick,
 }: IssueItemProps) => {
   return (
-    <S.IssueItemContainer onClick={onClick}>
+    <S.ItemContainer onClick={onClick}>
       <S.IssueItemBody>
         <S.IssueItemTitle>{`#${number} ${title}`}</S.IssueItemTitle>
-        <S.IssueItemInfo>{`작성자: ${user.login}`}</S.IssueItemInfo>
-        <S.IssueItemInfo>{`작성일: ${createdAt}`}</S.IssueItemInfo>
+        <S.IssueItemInfo>
+          <S.IssueItemProfileImg src={`${user.avatar_url}`} />
+          <S.IssueItemDescBlock>
+            <S.IssueItemDesc>{`작성자: ${user.login}`}</S.IssueItemDesc>
+            <S.IssueItemDesc>{`작성일: ${getFormattedDate(
+              createdAt
+            )}`}</S.IssueItemDesc>
+          </S.IssueItemDescBlock>
+        </S.IssueItemInfo>
       </S.IssueItemBody>
       <S.IssueItemComments>{`코멘트: ${comments}`}</S.IssueItemComments>
-    </S.IssueItemContainer>
+    </S.ItemContainer>
   );
 };
