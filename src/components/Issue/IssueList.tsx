@@ -12,7 +12,7 @@ import * as S from "./style";
 export const IssueList = () => {
   const issues = useIssuesState();
   const [page, setPage] = useState(1);
-  const [state, _] = useAsyncIssues(IssueService.getIssues, page, [page]);
+  const [state] = useAsyncIssues(IssueService.getIssues, page, [page]);
 
   const navigate = useNavigate();
 
