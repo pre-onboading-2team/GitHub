@@ -1,4 +1,3 @@
-// TODO: 타입 정의
 export type AssigneeProps = any;
 export type AssigneesProps = any;
 export type LabelsProps = any;

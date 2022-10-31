@@ -3,13 +3,13 @@
 import { client } from "./api";
 
 interface IssueService {
-  getIssues(): Promise<any>;
+  getIssues(page: number): Promise<any>;
   getIssue(number: number): Promise<any>;
 }
 
 class IssueServiceImp implements IssueService {
-  getIssues() {
-    return client.get("", { params: { sort: "comments" } });
+  getIssues(page: number) {
+    return client.get("", { params: { sort: "comments", page, per_page: 10 } });
   }
 
   getIssue(number: number) {

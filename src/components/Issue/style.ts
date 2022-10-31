@@ -16,15 +16,12 @@ export const ItemContainer = styled.div`
   width: 100%;
 
   border: 1px solid gray;
-  /* border-radius: 0.25rem; */
 
   padding: 0.8rem;
-  /* margin-bottom: 0.25rem; */
 
   cursor: pointer;
 
   & + & {
-    /* margin-bottom: 0.25rem; */
   }
 `;
 
@@ -42,7 +39,6 @@ export const BannerItemLink = styled.a`
 
 export const IssueItemBody = styled.div`
   display: flex;
-  /* width: 100%; */
   margin-right: auto;
   flex-direction: column;
   overflow: hidden;
@@ -61,12 +57,10 @@ export const IssueItemInfo = styled.div`
   display: flex;
 `;
 
-// TODO : image url 연결
 export const IssueItemProfileImg = styled.img`
   flex: none;
   height: 32px;
   width: 32px;
-  /* background: gray; */
   margin-right: 0.5rem;
 `;
 
@@ -86,7 +80,6 @@ export const IssueItemDesc = styled.div`
 export const IssueItemComments = styled.div`
   flex: none;
   font-size: 0.375rem;
-  /* margin-left: auto; */
   text-align: center;
 `;
 

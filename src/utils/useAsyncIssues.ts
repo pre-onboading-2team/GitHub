@@ -1,21 +1,23 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { DependencyList, useEffect, useReducer } from "react";
 
+import { IssuesState, useIssuesDispatch } from "../contexts/IssueContext";
+
 type AsyncData = AxiosResponse<any, any> | null;
 type AsyncError = AxiosError | Error | null | boolean;
 
-export type RequestState = {
+type RequestState = {
   loading: boolean;
   data: AsyncData;
   error: AsyncError;
 };
 
-export type Action =
+type Action =
   | { type: "LOADING" }
   | { type: "SUCCESS"; data: AsyncData }
   | { type: "ERROR"; error: AsyncError };
 
-function asyncReducer(state: RequestState, action: Action): RequestState {
+function issuesReducer(state: RequestState, action: Action): RequestState {
   switch (action.type) {
     case "LOADING":
       return {
@@ -46,21 +48,20 @@ const initialState: RequestState = {
   error: false,
 };
 
-export function useAsync(
+export function useAsyncIssues(
   callback: (params?: any) => Promise<any>,
-  params?: any,
+  page = 1,
   deps: DependencyList = []
 ): [RequestState, () => Promise<void>] {
-  const [state, dispatch] = useReducer(asyncReducer, initialState);
+  const [state, dispatch] = useReducer(issuesReducer, initialState);
+  const dispatchToContext = useIssuesDispatch();
   const fetchData = async () => {
     dispatch({ type: "LOADING" });
     try {
-      let data;
-      if (!params) data = await callback();
-      else {
-        data = await callback(params);
-      }
+      const data = await callback(page);
       dispatch({ type: "SUCCESS", data });
+      const state = data.data as IssuesState;
+      dispatchToContext({ type: "UPDATE", state });
     } catch (e: any) {
       dispatch({ type: "ERROR", error: e });
     }
