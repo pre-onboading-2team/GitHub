@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Spinner from "../../components/Spinner";
 import useIssueContext from "../../hooks/useIssueContext";
@@ -21,7 +21,12 @@ const IssueList = () => {
     }
     try {
       const res = await axios.get(
-        `https://api.github.com/repos/angular/angular-cli/issues?sort=comments&per_page=8&page=${pageNumber}`
+        `https://api.github.com/repos/angular/angular-cli/issues?sort=comments&per_page=8&page=${pageNumber}`,
+        {
+          headers: {
+            Authorization: "token" + process.env.REACT_APP_API_KEY,
+          },
+        }
       );
 
       const newDataArr = res.data.map((obj) => ({
@@ -45,14 +50,25 @@ const IssueList = () => {
   }, [pageNumber]);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    let timer;
+    window.addEventListener("scroll", () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(() => {
+        console.log("이벤트감지");
+        if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+          setPageNumber((num) => num + 1);
+        }
+      }, 200);
+    });
   });
 
-  const handleScroll = () => {
-    if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
-      setPageNumber((num) => num + 1);
-    }
-  };
+  // const handleScroll = () => {
+  //   if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+  //     setPageNumber((num) => num + 1);
+  //   }
+  // };
 
   if (isError) {
     return <ErrorPage />;
@@ -64,25 +80,24 @@ const IssueList = () => {
       ) : (
         <>
           {issueData.map((issue, idx) => (
-            <>
+            <React.Fragment key={issue.id}>
               {idx === 4 && (
                 <a
                   href="https://www.wanted.co.kr/"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <AdArea />
+                  <AdArea key={123} />
                 </a>
               )}
               <IssueListItem
-                key={issue.id}
                 title={issue.title}
                 user={issue.user}
                 date={issue.date}
                 number={issue.number}
                 comments={issue.comments}
               />
-            </>
+            </React.Fragment>
           ))}
         </>
       )}

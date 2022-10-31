@@ -16,10 +16,20 @@ const Detail = () => {
   const [isError, setIsError] = useState(false);
   useEffect(() => {
     const mainRespones = axios.get(
-      `https://api.github.com/repos/angular/angular-cli/issues/${number}`
+      `https://api.github.com/repos/angular/angular-cli/issues/${number}`,
+      {
+        headers: {
+          Authorization: "token" + process.env.REACT_APP_API_KEY,
+        },
+      }
     );
     const commentResponse = axios.get(
-      `https://api.github.com/repos/angular/angular-cli/issues/${number}/comments`
+      `https://api.github.com/repos/angular/angular-cli/issues/${number}/comments`,
+      {
+        headers: {
+          Authorization: "token" + process.env.REACT_APP_API_KEY,
+        },
+      }
     );
     Promise.all([mainRespones, commentResponse]) //
       .then(([main, comment]) => {

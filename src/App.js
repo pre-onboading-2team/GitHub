@@ -5,6 +5,7 @@ import { Home } from "./pages";
 import { Detail } from "./pages/Detail";
 
 function App() {
+  console.log(process.env.REACT_APP_API_KEY);
   return (
     <>
       <Routes>
