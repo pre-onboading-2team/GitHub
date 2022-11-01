@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useParams } from "react-router";
 
 import IssueService from "../apis/IssueService";
@@ -13,13 +13,13 @@ export const Issue = () => {
 
   const { loading, data, error } = state;
 
-  const init = async () => {
+  const init = useCallback(async () => {
     await getIssue();
-  };
+  }, [getIssue]);
 
   useEffect(() => {
     init();
-  }, [params]);
+  }, [params, getIssue, state, number, init]);
 
   return (
     <>

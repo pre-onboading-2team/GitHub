@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-import { useEffect } from "react";
-
 import { IssueProps } from "../../types";
 import { MarkdownRenderer } from "../Markdown/MarkdownRenderer";
 import { IssueItem } from "./IssueItem";
