@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router";
 
 import IssueService from "../apis/IssueService";
@@ -13,13 +13,10 @@ export const Issue = () => {
 
   const { loading, data, error } = state;
 
-  const init = useCallback(async () => {
-    await getIssue();
-  }, [getIssue]);
-
   useEffect(() => {
-    init();
-  }, [params, getIssue, state, number, init]);
+    getIssue();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
